@@ -179,34 +179,29 @@
     .hero-art {
       position: relative;
       width: min(100%, 400px);
-      height: 300px;
-      min-height: 0;
       margin-left: auto;
-      overflow: visible;
-      aspect-ratio: auto;
-      border: 0;
-      background: transparent;
-      box-shadow: none;
     }
-    .hero-photo { width: 400px; height: 300px; object-fit: cover; box-shadow: 24px 24px 0 rgba(117,198,232,.13), var(--shadow); }
-    .window-frame { position: absolute; inset: 0; border: 12px solid #e8d4ae; box-shadow: inset 0 0 0 2px rgba(6,39,66,.18); }
-    .window-frame::before, .window-frame::after { position: absolute; background: rgba(6,39,66,.25); content: ""; }
-    .window-frame::before { top: 0; bottom: 0; left: 49%; width: 4px; }
-    .window-frame::after { top: 46%; right: 0; left: 0; height: 4px; }
-    .sun { position: absolute; top: 16%; right: 17%; width: 77px; height: 77px; border-radius: 50%; background: #fff2be; box-shadow: 0 0 45px 22px rgba(255,228,150,.42); }
-    .mountain { position: absolute; bottom: 28%; width: 75%; height: 36%; clip-path: polygon(0 100%, 35% 15%, 48% 50%, 63% 0, 100% 100%); background: #497b83; opacity: .9; }
-    .mountain.one { left: -12%; }
-    .mountain.two { right: -27%; bottom: 27%; background: #30616b; transform: scaleX(-1); opacity: .75; }
-    .tabletop { position: absolute; right: -8%; bottom: -7%; left: -8%; height: 33%; background: linear-gradient(#643e2e 0%, #3d251e 100%); transform: perspective(200px) rotateX(10deg); }
-    .chair { position: absolute; right: 7%; bottom: 18%; width: 100px; height: 112px; border: 12px solid #543126; border-bottom: 0; border-radius: 48px 48px 0 0; opacity: .8; }
-    .chair::after { position: absolute; bottom: -75px; left: 14px; width: 8px; height: 75px; background: #543126; box-shadow: 53px 0 #543126; content: ""; }
-    .coffee-vessel { position: absolute; bottom: 14%; left: 28%; width: 112px; height: 105px; }
-    .coffee-vessel .dripper { position: absolute; top: 0; left: 29px; width: 53px; height: 45px; border: 3px solid #d8e7e1; border-radius: 5px 5px 22px 22px; background: linear-gradient(135deg, rgba(222,246,240,.75), rgba(124,180,181,.2)); clip-path: polygon(0 0, 100% 0, 78% 100%, 22% 100%); }
-    .coffee-vessel .carafe { position: absolute; bottom: 0; left: 17px; width: 78px; height: 68px; border: 3px solid #d8e7e1; border-radius: 10px 10px 23px 23px; background: linear-gradient(to top, rgba(56,29,19,.82) 0 38%, rgba(190,228,227,.24) 39%); }
-    .coffee-vessel .carafe::before { position: absolute; top: -20px; left: 24px; width: 26px; height: 22px; border: 3px solid #d8e7e1; border-bottom: 0; border-radius: 50% 50% 0 0; content: ""; }
-    .steam { position: absolute; bottom: 59%; left: 49%; width: 23px; height: 58px; border-left: 2px solid rgba(255,255,255,.63); border-radius: 50%; transform: rotate(16deg); }
-    .steam::after { position: absolute; top: -5px; left: 14px; width: 18px; height: 48px; border-right: 2px solid rgba(255,255,255,.44); border-radius: 50%; content: ""; }
-    .art-label { position: absolute; z-index: 3; right: -11px; top: 42%; display: grid; gap: 2px; padding: 10px 11px; border-left: 2px solid var(--sand); background: rgba(6,39,66,.86); color: #fff; }
+    .hero-photo {
+      display: block;
+      width: 400px;
+      height: 300px;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 24px 24px 0 rgba(117,198,232,.13), var(--shadow);
+    }
+    .art-label {
+      position: absolute;
+      z-index: 3;
+      right: -11px;
+      top: 42%;
+      display: grid;
+      gap: 2px;
+      padding: 10px 11px;
+      border-left: 2px solid var(--sand);
+      background: rgba(6,39,66,.86);
+      color: #fff;
+    }
     .art-label strong { font-family: "Playfair Display", serif; font-size: 22px; line-height: 1; }
     .art-label span { color: var(--sky); font-size: 9px; letter-spacing: .09em; }
     .art-label small { color: rgba(255,255,255,.72); font-size: 9px; }
@@ -353,8 +348,8 @@
       .hero-grid { grid-template-columns: 1fr; gap: 17px; padding-top: 112px; }
       .hero-content { max-width: 640px; }
       .scroll-note { margin-top: 29px; }
-      .hero-art { width: min(100%, 330px); height: 248px; min-height: 0; max-height: none; margin: 0; }
-      .hero-photo { width: 330px; height: 248px; }
+      .hero-art { width: min(100%, 330px); margin: 0; }
+      .hero-photo { width: 100%; max-width: 330px; height: auto; aspect-ratio: 4 / 3; }
       .coffee-grid { grid-template-columns: repeat(2, 1fr); }
       .coffee-card:nth-child(3) { grid-column: span 2; }
       .story-grid, .brew-grid { grid-template-columns: 1fr; }
@@ -375,12 +370,9 @@
       .hero-actions { margin-top: 23px; }
       .hero-actions .button { flex: 1; padding-inline: 13px; }
       .hero-meta { margin-top: 18px; }
-      .hero-art { width: 260px; height: 195px; min-height: 0; max-height: none; }
-      .hero-photo { width: 260px; height: 195px; }
+      .hero-art { width: min(100%, 260px); }
+      .hero-photo { width: 100%; max-width: 260px; height: auto; aspect-ratio: 4 / 3; }
       .art-label { display: none; }
-      .sun { width: 49px; height: 49px; }
-      .coffee-vessel { bottom: 9%; left: 25%; transform: scale(.72); transform-origin: bottom left; }
-      .chair { transform: scale(.72); transform-origin: bottom right; }
       .story, .coffee, .brew, .visit { padding: 76px 0; }
       .story-seal { width: 245px; height: 245px; }
       .story-seal::before { margin-bottom: 8px; font-size: 54px; }
@@ -442,7 +434,7 @@
         </div>
 
         <div class="hero-art" aria-hidden="true">
-          <img class="hero-photo" src="images/hero.jpg" width="400" height="300" alt="">
+          <img class="hero-photo" src="images/hero.jfif" width="400" height="300" alt="手沖咖啡情境" onerror="this.onerror=null;this.src='images/hero.jpg';">
           <span class="art-label"><strong>92°C</strong><span>理想水溫</span><small>細細喚醒香氣</small></span>
         </div>
       </div>
@@ -535,7 +527,7 @@
     <div class="wrap footer-grid">
       <div class="footer-brand">
         <a class="brand" href="#top" aria-label="回到藍天咖啡首頁"><span class="brand-mark" aria-hidden="true">B</span><span class="brand-copy"><strong>藍天咖啡</strong><small>BLUE SKY COFFEE</small></span></a>
-        <p>為喜歡手沖咖啡的你，留下一段慢慢品味、微微放晴的時間。</p>
+        <p>為喜愛手沖咖啡的你，留下一段慢慢品味、微微放晴的時間。</p>
       </div>
       <div>
         <p class="footer-heading">EXPLORE</p>
@@ -543,7 +535,7 @@
       </div>
       <div>
         <p class="footer-heading">CONTACT</p>
-        <div class="footer-contact"><a href="mailto:hello@bluesky.coffee">hello@bluesky.coffee</a><span>台中市西屯區晨光路 100 號</span><span>每日 10:00 — 19:00</span></div>
+        <div class="footer-contact"><a href="mailto:hello@bluesky.coffee">hello@bluesky.coffee</a><span>台中市西屯區僑光路 100 號</span><span>每日 10:00 — 19:00</span></div>
       </div>
     </div>
     <div class="wrap footer-bottom"><span>© 2025 BLUE SKY COFFEE. ALL RIGHTS RESERVED.</span><span>BREW SLOW · LIVE BRIGHT</span></div>
