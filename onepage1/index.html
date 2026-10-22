@@ -403,6 +403,7 @@
     .hero-img {
       position: relative;
       z-index: 1;
+<<<<<<< HEAD
       width: 400px;
       height: 300px;
       object-fit: cover;
@@ -412,6 +413,62 @@
       transition: var(--transition);
       display: block;
     }
+=======
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 45px;
+      align-items: center;
+      padding-top: 122px;
+      padding-bottom: 72px;
+    }
+    .hero-content { max-width: 560px; }
+    .hero .eyebrow { color: var(--sky); }
+    .hero-title {
+      max-width: 540px;
+      margin: 0;
+      font-family: "Noto Serif TC", serif;
+      font-size: clamp(42px, 5.5vw, 68px);
+      font-weight: 700;
+      letter-spacing: .04em;
+      line-height: 1.22;
+    }
+    .hero-title .sky-word { color: var(--sky); }
+    .hero-lede { max-width: 490px; margin: 25px 0 0; color: rgba(255,255,255,.76); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .hero-meta { margin: 27px 0 0; color: var(--sky); font-size: 10px; font-weight: 700; letter-spacing: .18em; }
+    .scroll-note { display: flex; align-items: center; gap: 10px; margin: 53px 0 0; color: rgba(255,255,255,.55); font-size: 9px; letter-spacing: .18em; }
+    .scroll-note::before { width: 38px; height: 1px; background: rgba(255,255,255,.45); content: ""; }
+
+    .hero-art {
+      position: relative;
+      width: min(100%, 400px);
+      margin-left: auto;
+    }
+    .hero-photo {
+      display: block;
+      width: 400px;
+      height: 300px;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 24px 24px 0 rgba(117,198,232,.13), var(--shadow);
+    }
+    .art-label {
+      position: absolute;
+      z-index: 3;
+      right: -11px;
+      top: 42%;
+      display: grid;
+      gap: 2px;
+      padding: 10px 11px;
+      border-left: 2px solid var(--sand);
+      background: rgba(6,39,66,.86);
+      color: #fff;
+    }
+    .art-label strong { font-family: "Playfair Display", serif; font-size: 22px; line-height: 1; }
+    .art-label span { color: var(--sky); font-size: 9px; letter-spacing: .09em; }
+    .art-label small { color: rgba(255,255,255,.72); font-size: 9px; }
+>>>>>>> ef8b522e8bd9e08bc957326a18c163dab1ce6837
 
     .hero-img:hover {
       transform: translateY(-6px) scale(1.02);
@@ -1291,44 +1348,63 @@
       .flavor-options {
         grid-template-columns: 1fr;
       }
+      .nav-links.open { max-height: 300px; }
+      .nav-links a { padding: 12px 24px; border-top: 1px solid rgba(255,255,255,.1); }
+      .nav-links .nav-cta { margin: 8px 24px 16px; padding: 9px 12px; text-align: center; }
+      .hero { min-height: 710px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 17px; padding-top: 112px; }
+      .hero-content { max-width: 640px; }
+      .scroll-note { margin-top: 29px; }
+      .hero-art { width: min(100%, 330px); margin: 0; }
+      .hero-photo { width: 100%; max-width: 330px; height: auto; aspect-ratio: 4 / 3; }
+      .coffee-grid { grid-template-columns: repeat(2, 1fr); }
+      .coffee-card:nth-child(3) { grid-column: span 2; }
+      .story-grid, .brew-grid { grid-template-columns: 1fr; }
+      .story-visual { max-width: 520px; width: 100%; margin: auto; }
+      .brew-art { max-width: 540px; width: 100%; margin: auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
     }
 
-    @media (max-width: 768px) {
-      .hero-img {
-        max-width: 100%;
-        height: auto;
-      }
-      .hero-visual::before {
-        display: none;
-      }
-      .mobile-toggle {
-        display: block;
-      }
-      .nav-menu {
-        position: fixed;
-        top: 76px;
-        left: 0;
-        width: 100%;
-        background: var(--dark-espresso);
-        flex-direction: column;
-        padding: 24px;
-        gap: 18px;
-        border-bottom: 1px solid rgba(245, 179, 36, 0.3);
-        transform: translateY(-150%);
-        transition: var(--transition);
-      }
-      .nav-menu.open {
-        transform: translateY(0);
-      }
-      .features-grid, .beans-grid, .ritual-grid, .reviews-grid {
-        grid-template-columns: 1fr;
-      }
-      .footer-top {
-        grid-template-columns: 1fr;
-      }
-      .form-row {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 560px) {
+      .wrap { width: calc(100% - 34px); }
+      .navbar { min-height: 70px; }
+      .brand-copy strong { font-size: 13px; }
+      .hero { min-height: 680px; }
+      .hero-grid { padding-top: 98px; padding-bottom: 34px; }
+      .hero-title { font-size: 40px; }
+      .hero-lede { margin-top: 16px; font-size: 14px; line-height: 1.7; }
+      .hero-actions { margin-top: 23px; }
+      .hero-actions .button { flex: 1; padding-inline: 13px; }
+      .hero-meta { margin-top: 18px; }
+      .hero-art { width: min(100%, 260px); }
+      .hero-photo { width: 100%; max-width: 260px; height: auto; aspect-ratio: 4 / 3; }
+      .art-label { display: none; }
+      .story, .coffee, .brew, .visit { padding: 76px 0; }
+      .story-seal { width: 245px; height: 245px; }
+      .story-seal::before { margin-bottom: 8px; font-size: 54px; }
+      .story-seal strong { font-size: 15px; }
+      .story-visual { min-height: 315px; }
+      .note-card { width: 185px; padding: 18px; }
+      .note-card p:last-child { font-size: 14px; }
+      .coffee-heading { display: block; margin-bottom: 30px; }
+      .coffee-heading .section-copy { margin-top: 14px; }
+      .coffee-grid { grid-template-columns: 1fr; }
+      .coffee-card, .coffee-card:nth-child(3) { min-height: 330px; grid-column: auto; }
+      .brew-art { min-height: 310px; }
+      .pour-rings { width: 185px; height: 185px; }
+      .v60 { transform: translate(-50%,-28%) scale(.82); }
+      .subscribe-form { display: grid; gap: 6px; padding: 5px; }
+      .subscribe-form input, .subscribe-form button { width: 100%; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-brand { grid-column: auto; }
+      .footer-bottom { display: grid; gap: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -1353,6 +1429,7 @@
         <li><a href="#vip" class="nav-link">尊榮優惠</a></li>
       </ul>
 
+<<<<<<< HEAD
       <div class="nav-actions">
         <button class="cart-indicator" id="cartBtn" title="查看手沖購物袋">
           🛒
@@ -1946,6 +2023,93 @@
           <button type="submit" class="btn-gold" style="width:100%;margin-top:10px;padding:14px;">
             <span>確認預約（免預付費用，現場結帳）</span>
           </button>
+=======
+        <div class="hero-art" aria-hidden="true">
+          <img class="hero-photo" src="images/hero.jfif" width="400" height="300" alt="手沖咖啡情境" onerror="this.onerror=null;this.src='images/hero.jpg';">
+          <span class="art-label"><strong>92°C</strong><span>理想水溫</span><small>細細喚醒香氣</small></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="story" id="story" aria-labelledby="storyTitle">
+      <div class="wrap story-grid">
+        <div class="story-visual reveal" aria-hidden="true">
+          <div class="story-seal"><strong>慢一點，<br>更清楚。</strong><span>LET THE FLAVOUR SPEAK</span></div>
+          <div class="note-card"><p>BLUE SKY NOTE</p><p>一杯好咖啡，從來不是匆忙完成的事。</p></div>
+        </div>
+        <div class="story-content reveal">
+          <p class="eyebrow">OUR PHILOSOPHY</p>
+          <h2 class="section-title" id="storyTitle">在一杯之間，看見產地的<span class="accent">晴朗</span>。</h2>
+          <p>我們相信，精品咖啡的美好不該被複雜掩蓋。以小批次烘焙留住豆子的個性，再用穩定、誠實的手沖，讓風土與時間在杯中變得清晰。</p>
+          <p>給懂得放慢腳步的人，也給每一個想重新認識咖啡的人。</p>
+          <a class="underlined-link" href="#brew">看看我們如何沖煮 →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="coffee" id="coffee" aria-labelledby="coffeeTitle">
+      <div class="wrap">
+        <div class="coffee-heading reveal">
+          <div>
+            <p class="eyebrow">SEASONAL SELECTION</p>
+            <h2 class="section-title" id="coffeeTitle">今天，想喝哪一片<span class="accent">藍天</span>？</h2>
+          </div>
+          <p class="section-copy">三款當季單品，為不同的晨光、午後與靜夜而選。</p>
+        </div>
+        <div class="coffee-grid">
+          <article class="coffee-card reveal">
+            <p class="bean-no">01 / BRIGHT</p>
+            <p class="origin">ETHIOPIA · YIRGACHEFFE</p>
+            <h3 class="bean-name">衣索比亞・耶加雪菲</h3>
+            <p class="flavour">白花、佛手柑、蜂蜜</p>
+            <div class="coffee-bottom"><span class="price">NT$ 520 / 200g</span><button class="save-button" type="button" data-coffee="衣索比亞・耶加雪菲">加入收藏 ＋</button></div>
+          </article>
+          <article class="coffee-card reveal">
+            <p class="bean-no">02 / JUICY</p>
+            <p class="origin">KENYA · KIRINYAGA</p>
+            <h3 class="bean-name">肯亞・祈安布</h3>
+            <p class="flavour">黑醋栗、洛神、葡萄柚</p>
+            <div class="coffee-bottom"><span class="price">NT$ 580 / 200g</span><button class="save-button" type="button" data-coffee="肯亞・祈安布">加入收藏 ＋</button></div>
+          </article>
+          <article class="coffee-card reveal">
+            <p class="bean-no">03 / ROUND</p>
+            <p class="origin">COLOMBIA · HUILA</p>
+            <h3 class="bean-name">哥倫比亞・慧蘭</h3>
+            <p class="flavour">黃桃、焦糖、可可尾韻</p>
+            <div class="coffee-bottom"><span class="price">NT$ 460 / 200g</span><button class="save-button" type="button" data-coffee="哥倫比亞・慧蘭">加入收藏 ＋</button></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="brew" id="brew" aria-labelledby="brewTitle">
+      <div class="wrap brew-grid">
+        <div class="brew-art reveal" aria-hidden="true">
+          <span class="pour-rings"></span><span class="pour-line"></span><span class="v60"></span>
+          <span class="brew-caption"><strong>2'45''</strong><span>V60 / 15G : 240ML</span></span>
+        </div>
+        <div class="brew-content reveal">
+          <p class="eyebrow">A QUIET RITUAL</p>
+          <h2 class="section-title" id="brewTitle">把時間交給水，讓咖啡說<span class="accent">自己的話</span>。</h2>
+          <p class="section-copy">不需要繁複儀式，只要三個安靜的步驟。每一個參數，都是為了讓你更靠近豆子原本的樣子。</p>
+          <div class="brew-steps">
+            <div class="brew-step"><span class="step-no">01</span><div><h3>研磨，先聞見期待</h3><p>15g 中細研磨，讓香氣從指尖開始展開。</p></div></div>
+            <div class="brew-step"><span class="step-no">02</span><div><h3>悶蒸，等待第一個呼吸</h3><p>以 92°C 熱水浸潤 30 秒，喚醒甜感與層次。</p></div></div>
+            <div class="brew-step"><span class="step-no">03</span><div><h3>注水，保持自己的節奏</h3><p>穩定畫圈，讓 240ml 的清澈在 2 分 45 秒完成。</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="visit" aria-labelledby="visitTitle">
+      <div class="wrap reveal">
+        <p class="eyebrow">THE BLUE SKY LETTER</p>
+        <h2 class="section-title" id="visitTitle">把下一杯好咖啡，寄到你的日常裡。</h2>
+        <p class="section-copy">每月一封風味通信，分享新豆、沖煮靈感與只給會員的小小驚喜。</p>
+        <form class="subscribe-form" id="subscribeForm">
+          <input type="email" aria-label="電子郵件地址" placeholder="你的電子郵件地址" required>
+          <button type="submit">訂閱風味通信</button>
+>>>>>>> ef8b522e8bd9e08bc957326a18c163dab1ce6837
         </form>
       </div>
     </div>
@@ -1974,6 +2138,7 @@
           </p>
         </div>
 
+<<<<<<< HEAD
         <div class="footer-col">
           <h5>手沖咖啡專區</h5>
           <ul class="footer-links">
@@ -2008,6 +2173,21 @@
       <div class="footer-bottom">
         <p>© 2026 Starbucks Coffee Company. 手沖咖啡專屬體驗網頁（依據作業規格建立）</p>
         <p>設計風格：高階咖啡豆 · 品牌顏色：黃色 · 用途：推廣手沖咖啡</p>
+=======
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top" aria-label="回到藍天咖啡首頁"><span class="brand-mark" aria-hidden="true">B</span><span class="brand-copy"><strong>藍天咖啡</strong><small>BLUE SKY COFFEE</small></span></a>
+        <p>為喜愛手沖咖啡的你，留下一段慢慢品味、微微放晴的時間。</p>
+      </div>
+      <div>
+        <p class="footer-heading">EXPLORE</p>
+        <div class="footer-links"><a href="#story">我們的故事</a><a href="#coffee">本季選豆</a><a href="#brew">沖煮日常</a></div>
+      </div>
+      <div>
+        <p class="footer-heading">CONTACT</p>
+        <div class="footer-contact"><a href="mailto:hello@bluesky.coffee">hello@bluesky.coffee</a><span>台中市西屯區僑光路 100 號</span><span>每日 10:00 — 19:00</span></div>
+>>>>>>> ef8b522e8bd9e08bc957326a18c163dab1ce6837
       </div>
     </div>
   </footer>
