@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="星巴克手沖咖啡，嚴選全球頂級莊園單品豆，以慢萃工藝細緻呈現咖啡風土。">
+  <meta name="theme-color" content="#171511">
+  <title>星巴克手沖咖啡｜頂級莊園單品豆・極致慢萃工藝</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Sans+TC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --gold: #f5b324;
+      --gold-light: #ffd466;
+      --gold-deep: #d9960d;
+      --ink: #171511;
+      --roast: #211b15;
+      --card-dark: #2b241d;
+      --cream: #fbf9f4;
+      --white: #fff;
+      --text: #2c2520;
+      --muted: #766d63;
+      --line: #e9e1d5;
+      --serif: "Noto Serif TC", Georgia, serif;
+      --sans: "Noto Sans TC", sans-serif;
+      --display: "Cinzel", Georgia, serif;
+      --container: min(1200px, calc(100% - 48px));
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+    body { margin: 0; background: var(--cream); color: var(--text); font: 400 15px/1.75 var(--sans); }
+    body.modal-open { overflow: hidden; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    button, a, input, select { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #bc8208; outline-offset: 3px; }
+    .container { width: var(--container); margin-inline: auto; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 12px; color: #a26d00; font: 700 11px/1.4 var(--display); letter-spacing: .18em; text-transform: uppercase; }
+    .eyebrow::after { width: 30px; height: 1px; background: currentColor; content: ""; }
+    .section-heading { max-width: 720px; margin: 0 auto 46px; text-align: center; }
+    .section-heading .eyebrow { justify-content: center; }
+    .section-heading h2 { margin: 13px 0 12px; font: 700 clamp(28px, 3.2vw, 42px)/1.35 var(--serif); }
+    .section-heading p { max-width: 580px; margin: auto; color: var(--muted); }
+    .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 12px; border: 1px solid transparent; border-radius: 40px; padding: 0 22px; cursor: pointer; font-size: 13px; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button-gold { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: var(--ink); box-shadow: 0 8px 22px #f5b32438; }
+    .button-gold:hover { box-shadow: 0 11px 26px #f5b32455; }
+    .button-outline { border-color: #ffffff55; background: transparent; color: var(--white); }
+    .button-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+    .button-dark { background: var(--ink); color: var(--gold-light); }
+
+    .navbar { position: fixed; z-index: 20; inset: 0 0 auto; border-bottom: 1px solid #f5b32455; background: #171511f2; backdrop-filter: blur(14px); color: var(--white); }
+    .nav-inner { width: min(1320px, calc(100% - 48px)); min-height: 76px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 11px; }
+    .brand-mark { display: grid; width: 40px; aspect-ratio: 1; place-items: center; border: 1px solid #ffe39a; border-radius: 50%; background: linear-gradient(145deg, #ffd466, #d9960d); color: var(--ink); font-size: 20px; box-shadow: 0 0 20px #f5b32455; }
+    .brand-copy { display: grid; line-height: 1.25; }
+    .brand-copy strong { font: 600 14px var(--serif); }
+    .brand-copy small { margin-top: 3px; color: #c9b99d; font: 600 9px var(--display); letter-spacing: .16em; }
+    .nav-links { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); margin: 0; padding: 0; list-style: none; }
+    .nav-links a { position: relative; display: block; padding: 10px 0; color: #e7e0d5; font-size: 12px; white-space: nowrap; }
+    .nav-links a::after { position: absolute; right: 0; bottom: 3px; left: 0; height: 1px; background: var(--gold); content: ""; transform: scaleX(0); transform-origin: left; transition: transform .2s ease; }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 12px; }
+    .cart-button, .menu-toggle { position: relative; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid #ffffff3d; border-radius: 50%; background: transparent; color: var(--gold-light); cursor: pointer; }
+    .cart-button svg { width: 19px; height: 19px; }
+    .cart-count { position: absolute; top: -4px; right: -5px; display: grid; min-width: 19px; height: 19px; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: #c84735; color: #fff; font: 700 10px var(--sans); }
+    .nav-cta { min-height: 42px; padding-inline: 16px; font-size: 12px; }
+    .menu-toggle { display: none; font-size: 20px; }
+
+    .hero { position: relative; min-height: 730px; overflow: hidden; padding: 145px 0 82px; background: radial-gradient(ellipse at 79% 34%, #583b1670 0, transparent 34%), radial-gradient(ellipse at 13% 92%, #4b321633 0, transparent 40%), var(--ink); color: var(--white); }
+    .hero::after { position: absolute; top: 100px; right: -160px; width: min(52vw, 620px); aspect-ratio: 1; border: 1px dashed #f5b32455; border-radius: 50%; content: ""; animation: orbit 60s linear infinite; pointer-events: none; }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: clamp(38px, 7vw, 100px); }
+    .hero-copy { animation: rise .7s both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-tag { display: inline-flex; align-items: center; gap: 9px; border: 1px solid #f5b3248c; border-radius: 30px; padding: 7px 13px; color: var(--gold-light); font-size: 11px; }
+    .hero h1 { max-width: 650px; margin: 23px 0 18px; font: 700 clamp(37px, 5vw, 62px)/1.35 var(--serif); letter-spacing: 0; }
+    .hero h1 em { color: var(--gold-light); font-style: normal; }
+    .hero-copy > p { max-width: 545px; margin: 0; color: #c7bfb3; font-size: 15px; line-height: 2; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 43px; padding-top: 23px; border-top: 1px solid #ffffff26; }
+    .stat { display: grid; gap: 3px; }
+    .stat strong { color: var(--gold-light); font: 700 16px var(--display); }
+    .stat span { color: #b7afa4; font-size: 10px; }
+    .hero-visual { position: relative; max-width: 500px; justify-self: end; padding: 13px; border: 1px solid #f5b32480; border-radius: 4px; background: #f5b32412; box-shadow: 0 25px 70px #0008; transform: rotate(1.3deg); }
+    .hero-visual img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: saturate(.82); }
+    .image-caption { position: absolute; right: 13px; bottom: 13px; left: 13px; display: flex; justify-content: space-between; gap: 12px; padding: 32px 18px 15px; background: linear-gradient(transparent, #14110fe8); color: #fff; font-size: 11px; }
+    .image-caption strong { color: var(--gold-light); font: 600 12px var(--serif); }
+    .visual-index { position: absolute; top: -23px; right: -18px; display: grid; width: 72px; aspect-ratio: 1; place-items: center; border: 1px solid #f5b324; border-radius: 50%; background: var(--ink); color: var(--gold-light); font: 700 11px var(--display); }
+
+    .features-section, .beans-section, .finder-section, .reviews-section { padding: 100px 0; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .feature { min-height: 225px; padding: 27px 26px; border: 1px solid var(--line); background: var(--white); transition: transform .22s ease, box-shadow .22s ease; }
+    .feature:hover { transform: translateY(-4px); box-shadow: 0 12px 30px #2c252014; }
+    .feature-icon { display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid #f5b32485; border-radius: 50%; background: #fff9e6; font-size: 22px; }
+    .feature h3 { margin: 18px 0 7px; font: 700 18px/1.5 var(--serif); }
+    .feature p { margin: 0; color: var(--muted); font-size: 13px; }
+    .feature .proof { display: block; margin-top: 14px; color: #85600e; font-size: 11px; font-weight: 700; }
+
+    .beans-section { background: #f1ede5; }
+    .filter-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: -8px 0 32px; }
+    .filter-tab { min-height: 39px; border: 1px solid #dcd3c4; border-radius: 24px; padding: 0 15px; background: transparent; color: #62594e; cursor: pointer; font-size: 11px; transition: .2s ease; }
+    .filter-tab:hover, .filter-tab.active { border-color: var(--ink); background: var(--ink); color: var(--gold-light); }
+    .bean-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .bean-card { overflow: hidden; border: 1px solid var(--line); background: var(--white); box-shadow: 0 5px 16px #2c25200a; animation: card-in .35s both; }
+    @keyframes card-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .bean-card[hidden] { display: none; }
+    .bean-art { position: relative; display: flex; min-height: 140px; align-items: flex-end; justify-content: space-between; overflow: hidden; padding: 18px; background: radial-gradient(ellipse at 75% 30%, #f5b32455, transparent 35%), linear-gradient(130deg, #332419, #171511); color: var(--gold-light); }
+    .bean-art::after { position: absolute; top: -33px; right: 15%; width: 115px; aspect-ratio: 1; border: 1px solid #f5b32452; border-radius: 50%; box-shadow: 0 0 0 13px #f5b3240b, 0 0 0 27px #f5b3240b; content: ""; }
+    .bean-art .origin { position: relative; z-index: 1; font: 600 11px var(--display); letter-spacing: .1em; }
+    .bean-art .roast { position: relative; z-index: 1; border: 1px solid #ffd46677; border-radius: 20px; padding: 4px 9px; color: #fff1c8; font-size: 10px; }
+    .bean-info { padding: 20px; }
+    .bean-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .bean-topline h3 { margin: 0; font: 700 17px/1.5 var(--serif); }
+    .bean-id { color: #9c8b73; font: 600 10px var(--display); }
+    .bean-process { margin: 3px 0 12px; color: #a26d00; font-size: 11px; font-weight: 600; }
+    .bean-notes { min-height: 25px; margin: 0 0 15px; color: var(--muted); font-size: 12px; }
+    .bean-params { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 12px; border-top: 1px solid #f0ece5; }
+    .bean-params span { border-radius: 3px; padding: 3px 7px; background: #f6f2e9; color: #695e50; font-size: 10px; }
+    .bean-buy { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 17px; }
+    .price { color: var(--text); font: 700 19px var(--display); white-space: nowrap; }
+    .price small { color: #82786b; font: 400 10px var(--sans); }
+    .buy-button { min-height: 38px; padding-inline: 15px; font-size: 11px; }
+
+    .ritual-section { padding: 100px 0; background: radial-gradient(ellipse at 75% 12%, #523a1d38, transparent 36%), var(--roast); color: var(--white); }
+    .ritual-section .section-heading p { color: #bbb1a5; }
+    .ritual-section .eyebrow { color: var(--gold-light); }
+    .ritual-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; }
+    .ritual-step { min-height: 205px; padding: 20px; border-top: 1px solid #f5b32485; background: #ffffff08; }
+    .step-number { color: var(--gold); font: 700 26px var(--display); }
+    .ritual-step h3 { margin: 10px 0 7px; font: 600 16px var(--serif); }
+    .ritual-step p { margin: 0; color: #bcb2a7; font-size: 12px; }
+    .step-tag { display: inline-block; margin-top: 14px; color: var(--gold-light); font-size: 10px; }
+    .video-wrap { display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: 48px; margin-top: 56px; padding-top: 42px; border-top: 1px solid #ffffff24; }
+    .video-copy .eyebrow { margin-bottom: 14px; }
+    .video-copy h3 { margin: 0 0 10px; font: 600 24px/1.45 var(--serif); }
+    .video-copy p { margin: 0; color: #bcb2a7; font-size: 13px; }
+    .video-frame { width: 100%; aspect-ratio: 560 / 315; border: 1px solid #f5b32455; background: #090807; }
+    .video-frame iframe { width: 100%; height: 100%; border: 0; }
+
+    .finder-section { background: var(--cream); }
+    .finder-panel { display: grid; grid-template-columns: .95fr 1.05fr; border: 1px solid var(--line); background: #fff; box-shadow: 0 15px 40px #2c25200d; }
+    .finder-choices { padding: 34px; }
+    .finder-choices h3 { margin: 0 0 19px; font: 700 21px var(--serif); }
+    .choice-list { display: grid; gap: 9px; }
+    .flavor-choice { display: flex; width: 100%; align-items: center; gap: 13px; border: 1px solid var(--line); padding: 13px; background: white; color: var(--text); text-align: left; cursor: pointer; transition: .2s ease; }
+    .flavor-choice:hover, .flavor-choice[aria-pressed="true"] { border-color: #b57d05; background: #fffaf0; }
+    .choice-icon { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; border-radius: 50%; background: #f7f0df; font-size: 18px; }
+    .flavor-choice strong, .flavor-choice small { display: block; }
+    .flavor-choice strong { font-size: 12px; }
+    .flavor-choice small { margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .finder-result { display: flex; flex-direction: column; justify-content: center; min-height: 340px; padding: 42px; background: var(--ink); color: var(--white); }
+    .finder-result .eyebrow { color: var(--gold-light); }
+    .finder-result h3 { margin: 16px 0 9px; font: 700 29px/1.4 var(--serif); }
+    .finder-result p { max-width: 430px; margin: 0; color: #c8bfb2; font-size: 13px; }
+    .result-buy { display: flex; align-items: center; gap: 18px; margin-top: 25px; }
+    .result-buy .price { color: var(--gold-light); }
+
+    .vip-section { padding: 0 0 100px; background: var(--cream); }
+    .vip-panel { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; overflow: hidden; padding: clamp(30px, 5vw, 62px); background: linear-gradient(125deg, #ffd466, #f5b324 55%, #d9960d); color: var(--ink); }
+    .vip-panel::after { position: absolute; top: -120px; right: 11%; width: 370px; aspect-ratio: 1; border: 1px solid #ffffff6b; border-radius: 50%; box-shadow: 0 0 0 28px #ffffff18, 0 0 0 58px #ffffff12; content: ""; pointer-events: none; }
+    .vip-copy, .vip-form-wrap { position: relative; z-index: 1; }
+    .vip-copy .eyebrow { color: #543c0d; }
+    .vip-copy h2 { max-width: 550px; margin: 15px 0 12px; font: 700 clamp(28px, 3.3vw, 40px)/1.35 var(--serif); }
+    .vip-copy > p { max-width: 510px; margin: 0; color: #3e321b; font-size: 13px; }
+    .vip-perks { display: flex; flex-wrap: wrap; gap: 9px 16px; margin-top: 20px; color: #433516; font-size: 11px; }
+    .vip-form-wrap { align-self: center; padding: 24px; border: 1px solid #fff9e67a; background: #fff7df80; }
+    .vip-form-wrap h3 { margin: 0 0 5px; font: 700 17px var(--serif); }
+    .vip-form-wrap p { margin: 0 0 15px; color: #5a4927; font-size: 11px; }
+    .email-row { display: flex; gap: 7px; }
+    .email-row input { min-width: 0; flex: 1; height: 45px; border: 1px solid #9a741f66; border-radius: 0; padding: 0 12px; background: #fffdf7; color: var(--text); font-size: 12px; }
+    .email-row button { min-height: 45px; border-radius: 0; padding-inline: 14px; font-size: 11px; }
+    .vip-note { display: block; margin-top: 9px; color: #69582f; font-size: 10px; }
+
+    .reviews-section { background: #f1ede5; }
+    .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .review { padding: 25px; border: 1px solid #e3dbcf; background: #fff; }
+    .stars { color: #b77c00; font-size: 13px; letter-spacing: 2px; }
+    .review blockquote { min-height: 96px; margin: 15px 0 20px; color: #534a40; font: 500 14px/1.9 var(--serif); }
+    .review-person { display: flex; align-items: center; gap: 11px; padding-top: 14px; border-top: 1px solid #eee8df; }
+    .avatar { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 50%; background: #eee4d0; color: #715517; font: 700 12px var(--serif); }
+    .review-person strong, .review-person small { display: block; }
+    .review-person strong { font-size: 12px; }
+    .review-person small { color: var(--muted); font-size: 10px; }
+
+    .footer { padding: 62px 0 20px; background: var(--ink); color: #eee7dc; }
+    .footer-grid { display: grid; grid-template-columns: 1.35fr repeat(3, 1fr); gap: 36px; padding-bottom: 38px; }
+    .footer-brand p { max-width: 260px; margin: 17px 0 0; color: #b5aba0; font-size: 12px; }
+    .footer h3 { margin: 2px 0 16px; color: var(--gold-light); font: 600 13px var(--serif); }
+    .footer ul { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+    .footer li, .footer a { color: #bdb4a9; font-size: 11px; }
+    .footer a:hover { color: var(--gold-light); }
+    .footer-address { display: inline-block; margin-top: 11px; text-decoration: underline; text-underline-offset: 3px; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 18px; border-top: 1px solid #ffffff20; color: #8f867c; font-size: 10px; }
+
+    .modal-overlay { position: fixed; z-index: 40; inset: 0; display: grid; place-items: center; overflow-y: auto; padding: 20px; background: #080706b8; opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility .2s ease; }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    .modal { width: min(540px, 100%); max-height: min(90vh, 760px); overflow-y: auto; background: var(--cream); box-shadow: 0 25px 80px #0008; transform: translateY(12px); transition: transform .2s ease; }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 25px 27px 20px; background: var(--ink); color: white; }
+    .modal-head .eyebrow { color: var(--gold-light); }
+    .modal-head h2 { margin: 7px 0 0; font: 700 22px var(--serif); }
+    .modal-close { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; border: 1px solid #ffffff47; border-radius: 50%; background: transparent; color: #fff; cursor: pointer; font-size: 20px; }
+    .reserve-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 24px 27px 27px; }
+    .field { display: grid; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { color: #50473d; font-size: 11px; font-weight: 700; }
+    .field input, .field select { width: 100%; height: 44px; border: 1px solid #d9d0c3; border-radius: 0; padding: 0 11px; background: white; color: var(--text); font-size: 12px; }
+    .reserve-form .button { grid-column: 1 / -1; margin-top: 5px; }
+    .toast { position: fixed; z-index: 50; right: 24px; bottom: 24px; max-width: min(420px, calc(100% - 32px)); padding: 14px 18px; border-left: 4px solid var(--gold); background: var(--ink); color: #fff; box-shadow: 0 12px 35px #0004; opacity: 0; visibility: hidden; transform: translateY(12px); transition: .25s ease; font-size: 12px; }
+    .toast.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    .toast strong { color: var(--gold-light); }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+
+    @media (max-width: 1050px) {
+      .nav-links { gap: 13px; }
+      .nav-links a { font-size: 11px; }
+      .nav-cta { padding-inline: 13px; }
+      .hero-grid { gap: 42px; }
+    }
+    @media (max-width: 900px) {
+      .nav-links { position: absolute; top: 76px; right: 0; left: 0; display: none; align-items: stretch; gap: 0; padding: 8px 24px 18px; border-bottom: 1px solid #f5b32455; background: #171511fa; }
+      .nav-links.open { display: grid; }
+      .nav-links a { padding: 12px 0; border-bottom: 1px solid #ffffff14; font-size: 13px; }
+      .nav-links a::after { display: none; }
+      .menu-toggle { display: grid; }
+      .hero { min-height: auto; padding-top: 130px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-copy { max-width: 690px; }
+      .hero-visual { width: min(100%, 560px); justify-self: center; }
+      .hero::after { top: 440px; right: -170px; width: 480px; }
+      .feature-grid, .bean-grid, .review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ritual-grid { grid-template-columns: repeat(2, 1fr); }
+      .vip-panel { grid-template-columns: 1fr; }
+      .vip-form-wrap { max-width: 580px; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      :root { --container: min(100% - 32px, 520px); }
+      .nav-inner { width: calc(100% - 28px); min-height: 68px; gap: 10px; }
+      .brand-mark { width: 36px; }
+      .brand-copy strong { font-size: 12px; }
+      .brand-copy small { font-size: 8px; }
+      .nav-links { top: 68px; }
+      .nav-actions { gap: 7px; }
+      .nav-cta { display: none; }
+      .cart-button, .menu-toggle { width: 38px; height: 38px; }
+      .hero { padding: 112px 0 62px; }
+      .hero h1 { font-size: clamp(35px, 10vw, 48px); }
+      .hero-copy > p { font-size: 13px; }
+      .hero-actions { display: grid; grid-template-columns: 1fr; max-width: 300px; }
+      .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .stat strong { font-size: 13px; }
+      .stat span { font-size: 9px; }
+      .hero-visual { padding: 8px; }
+      .image-caption { right: 8px; bottom: 8px; left: 8px; padding: 27px 12px 11px; }
+      .features-section, .beans-section, .finder-section, .reviews-section, .ritual-section { padding: 72px 0; }
+      .section-heading { margin-bottom: 32px; }
+      .section-heading h2 { font-size: 29px; }
+      .feature-grid, .bean-grid, .review-grid, .ritual-grid { grid-template-columns: 1fr; }
+      .feature { min-height: 0; }
+      .bean-art { min-height: 125px; }
+      .ritual-step { min-height: 0; }
+      .video-wrap { grid-template-columns: 1fr; gap: 22px; margin-top: 38px; padding-top: 30px; }
+      .video-copy h3 { font-size: 21px; }
+      .finder-panel { grid-template-columns: 1fr; }
+      .finder-choices { padding: 24px 18px; }
+      .finder-result { min-height: 290px; padding: 28px 22px; }
+      .finder-result h3 { font-size: 25px; }
+      .vip-section { padding-bottom: 72px; }
+      .vip-panel { gap: 24px; padding: 28px 20px; }
+      .vip-form-wrap { padding: 19px 15px; }
+      .email-row { flex-direction: column; }
+      .email-row button { width: 100%; }
+      .review blockquote { min-height: 0; }
+      .footer { padding-top: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; gap: 7px; }
+      .reserve-form { grid-template-columns: 1fr; padding: 20px; }
+      .field.full, .reserve-form .button { grid-column: auto; }
+      .modal-head { padding: 21px 20px 17px; }
+      .toast { right: 16px; bottom: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <nav class="nav-inner" aria-label="主要導覽">
+      <a class="brand" href="#home" aria-label="星巴克手沖咖啡首頁">
+        <span class="brand-mark" aria-hidden="true">★</span>
+        <span class="brand-copy"><strong>星巴克手沖咖啡</strong><small>POUR-OVER RESERVE</small></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features">高階風格</a></li>
+        <li><a href="#beans">頂級豆單</a></li>
+        <li><a href="#ritual">手沖工藝</a></li>
+        <li><a href="#finder">風味尋豆</a></li>
+        <li><a href="#vip">尊榮優惠</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="cart-button" id="cartButton" type="button" aria-label="購物袋，共 0 件">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 8h14l1 12H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+          <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+        </button>
+        <button class="button button-gold nav-cta reserve-trigger" type="button">預約手沖品鑑 <span aria-hidden="true">↗</span></button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="開啟導覽選單" aria-expanded="false" aria-controls="navLinks">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="hero-tag"><span aria-hidden="true">✦</span> 星巴克典藏級手沖體驗・限量微批次</span>
+          <h1>滴滴純粹<br>詮釋<em>高階咖啡豆</em><br>的風土靈魂</h1>
+          <p>從海拔 2,000 公尺的莊園微批次，到黑圍裙大師手中的慢速萃取。留一點時間，讓每一杯咖啡都說出自己的產地故事。</p>
+          <div class="hero-actions">
+            <a class="button button-gold" href="#beans">探索手沖精品豆單 <span aria-hidden="true">→</span></a>
+            <button class="button button-outline reserve-trigger" type="button">預約門市大師品鑑</button>
+          </div>
+          <div class="hero-stats" aria-label="咖啡品質數據">
+            <div class="stat"><strong>100%</strong><span>頂級莊園單品豆</span></div>
+            <div class="stat"><strong>92°C</strong><span>精準金杯萃取水溫</span></div>
+            <div class="stat"><strong>Q-GRAD</strong><span>國際杯測師嚴選</span></div>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="../onepage2/images/hero.jpg" alt="窗景山巒前，手沖咖啡器具靜置於木桌上">
+          <figcaption class="image-caption"><strong>風土入杯，慢慢品味</strong><span>EST. 1971 · COFFEE CRAFT</span></figcaption>
+          <span class="visual-index" aria-hidden="true">ORIGIN<br>01 / 06</span>
+        </figure>
+      </div>
+    </section>
+
+    <section class="features-section" id="features">
+      <div class="container">
+        <header class="section-heading"><span class="eyebrow">OUR REFINEMENT</span><h2>每一個細節，都有講究</h2><p>從產地、烘焙到注水，讓高階單品豆的風味完整抵達你的杯中。</p></header>
+        <div class="feature-grid">
+          <article class="feature"><span class="feature-icon" aria-hidden="true">🌱</span><h3>全球高海拔微批次生豆</h3><p>走訪高海拔莊園，只挑選全球前 1% 的珍稀批次與手摘深紅果。</p><span class="proof">✓ 全程恆溫冷鏈空運直送</span></article>
+          <article class="feature"><span class="feature-icon" aria-hidden="true">🔥</span><h3>單一產區專屬烘焙曲線</h3><p>依豆種與處理法量身設計烘焙曲線，保存花香、果酸與甜感平衡。</p><span class="proof">✓ 淺焙至中焙，讓原味綻放</span></article>
+          <article class="feature"><span class="feature-icon" aria-hidden="true">☕</span><h3>黑圍裙大師的手沖儀式</h3><p>由咖啡大師親自掌壺，以 92°C 恆溫熱水喚醒層次分明的香氣。</p><span class="proof">✓ 經典 V60 與 Chemex 萃取</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="beans-section" id="beans">
+      <div class="container">
+        <header class="section-heading"><span class="eyebrow">THE RESERVE COLLECTION</span><h2>尋一款，今天想喝的風味</h2><p>六款莊園單品，從明亮花香到深焙甘醇，為你的手沖時光找到恰好的節奏。</p></header>
+        <div class="filter-tabs" role="group" aria-label="咖啡豆分類">
+          <button class="filter-tab active" type="button" data-filter="all" aria-pressed="true">全部手沖豆</button>
+          <button class="filter-tab" type="button" data-filter="light" aria-pressed="false">花香與明亮果酸</button>
+          <button class="filter-tab" type="button" data-filter="medium" aria-pressed="false">堅果與焦糖平衡</button>
+          <button class="filter-tab" type="button" data-filter="rare" aria-pressed="false">珍稀競標批次</button>
+        </div>
+        <div class="bean-grid" id="beansContainer">
+          <article class="bean-card" data-category="light" data-bean="耶加雪菲 斑蒂雅" data-price="480">
+            <div class="bean-art"><span class="origin">ETHIOPIA · YIRGACHEFFE</span><span class="roast">淺焙 LIGHT</span></div>
+            <div class="bean-info"><div class="bean-topline"><h3>耶加雪菲 斑蒂雅</h3><span class="bean-id">01 / 06</span></div><p class="bean-process">衣索比亞・精緻日曬</p><p class="bean-notes">茉莉花、白桃、伯爵茶感</p><div class="bean-params"><span>V60 濾杯</span><span>92°C</span><span>粉水比 1:15</span></div><div class="bean-buy"><span class="price">480 <small>NT$ / 250g</small></span><button class="button button-dark buy-button" type="button">選購＋</button></div></div>
+          </article>
+          <article class="bean-card" data-category="rare" data-bean="巴拿馬 波奎特 藝伎" data-price="820">
+            <div class="bean-art"><span class="origin">PANAMA · BOQUETE</span><span class="roast">極淺焙 ULTRA-LIGHT</span></div>
+            <div class="bean-info"><div class="bean-topline"><h3>巴拿馬 波奎特 藝伎</h3><span class="bean-id">02 / 06</span></div><p class="bean-process">限量尊榮・百花水洗</p><p class="bean-notes">玫瑰花香、佛手柑、荔枝蜂蜜</p><div class="bean-params"><span>Origami 濾杯</span><span>91°C</span><span>慢速中心注水</span></div><div class="bean-buy"><span class="price">820 <small>NT$ / 250g</small></span><button class="button button-dark buy-button" type="button">選購＋</button></div></div>
+          </article>
+          <article class="bean-card" data-category="light" data-bean="肯亞 涅里 AA TOP" data-price="520">
+            <div class="bean-art"><span class="origin">KENYA · NYERI</span><span class="roast">淺中焙 MED-LIGHT</span></div>
+            <div class="bean-info"><div class="bean-topline"><h3>肯亞 涅里 AA TOP</h3><span class="bean-id">03 / 06</span></div><p class="bean-process">肯亞產區・雙重水洗發酵</p><p class="bean-notes">黑醋栗、黑莓果汁、紅酒尾韻</p><div class="bean-params"><span>Kalita 濾杯</span><span>90°C</span><span>分段注水</span></div><div class="bean-buy"><span class="price">520 <small>NT$ / 250g</small></span><button class="button button-dark buy-button" type="button">選購＋</button></div></div>
+          </article>
+          <article class="bean-card" data-category="medium" data-bean="音樂家系列 巴哈" data-price="560">
+            <div class="bean-art"><span class="origin">COSTA RICA · TARRAZU</span><span class="roast">中焙 MEDIUM</span></div>
+            <div class="bean-info"><div class="bean-topline"><h3>音樂家系列 巴哈</h3><span class="bean-id">04 / 06</span></div><p class="bean-process">哥斯大黎加・葡萄乾蜜處理</p><p class="bean-notes">熟草莓、太妃糖、紅石榴</p><div class="bean-params"><span>V60 濾杯</span><span>89°C</span><span>粉水比 1:14.5</span></div><div class="bean-buy"><span class="price">560 <small>NT$ / 250g</small></span><button class="button button-dark buy-button" type="button">選購＋</button></div></div>
+          </article>
+          <article class="bean-card" data-category="rare" data-bean="哥倫比亞 薇拉 藝伎" data-price="650">
+            <div class="bean-art"><span class="origin">COLOMBIA · HUILA</span><span class="roast">淺中焙 MED-LIGHT</span></div>
+            <div class="bean-info"><div class="bean-topline"><h3>哥倫比亞 薇拉 藝伎</h3><span class="bean-id">05 / 06</span></div><p class="bean-process">哥倫比亞・厭氧發酵蜜處理</p><p class="bean-notes">芒果乾、威士忌桶陳、黑巧克力</p><div class="bean-params"><span>Chemex 濾壺</span><span>93°C</span><span>緩慢大水流</span></div><div class="bean-buy"><span class="price">650 <small>NT$ / 250g</small></span><button class="button button-dark buy-button" type="button">選購＋</button></div></div>
+          </article>
+          <article class="bean-card" data-category="medium" data-bean="黃金曼特寧 三次手選" data-price="460">
+            <div class="bean-art"><span class="origin">SUMATRA · MANDELING</span><span class="roast">中深焙 MED-DARK</span></div>
+            <div class="bean-info"><div class="bean-topline"><h3>黃金曼特寧 三次手選</h3><span class="bean-id">06 / 06</span></div><p class="bean-process">蘇門答臘・濕刨法</p><p class="bean-notes">雪松草本、焦糖奶油、特濃黑巧</p><div class="bean-params"><span>Kono 滴濾杯</span><span>88°C</span><span>點滴法萃取</span></div><div class="bean-buy"><span class="price">460 <small>NT$ / 250g</small></span><button class="button button-dark buy-button" type="button">選購＋</button></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="ritual-section" id="ritual">
+      <div class="container">
+        <header class="section-heading"><span class="eyebrow">THE POUR-OVER RITUAL</span><h2>手沖黃金萃取四部曲</h2><p>穩定的每一步，讓香氣、甜感與尾韻依序展開。</p></header>
+        <div class="ritual-grid">
+          <article class="ritual-step"><span class="step-number">01</span><h3>嚴謹研磨刻度</h3><p>中粗研磨如粗海鹽顆粒，讓水流均勻穿過，避免過萃帶來苦澀。</p><span class="step-tag">15g 精密秤重</span></article>
+          <article class="ritual-step"><span class="step-number">02</span><h3>30 秒香氣悶蒸</h3><p>注入約 30ml 熱水，等待咖啡粉排氣膨脹，香氣在此刻甦醒。</p><span class="step-tag">Bloom 芬芳釋放</span></article>
+          <article class="ritual-step"><span class="step-number">03</span><h3>同心圓穩定注水</h3><p>從中心向外緩慢繞圈，分三段平穩注水，完整萃取 225ml。</p><span class="step-tag">金杯比例 1:15</span></article>
+          <article class="ritual-step"><span class="step-number">04</span><h3>多溫層細品體驗</h3><p>感受高溫花香、60°C 果酸，以及常溫時悠長的蜜香甘韻。</p><span class="step-tag">三段溫度風味變幻</span></article>
+        </div>
+        <div class="video-wrap">
+          <div class="video-copy"><span class="eyebrow">MASTER CLASS</span><h3>注水的節奏，是風味的樂章</h3><p>從水流速度到落點控制，細看每一個手沖細節如何改變咖啡的表現。</p></div>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/hMOYa4EBntI" title="手沖咖啡與拉花技法示範" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="finder-section" id="finder">
+      <div class="container">
+        <header class="section-heading"><span class="eyebrow">YOUR FLAVOR, YOUR CUP</span><h2>今天，想要哪一種風味？</h2><p>選擇你喜歡的味覺方向，讓尋豆師為你找到合拍的莊園豆。</p></header>
+        <div class="finder-panel">
+          <div class="finder-choices"><h3>我偏愛……</h3><div class="choice-list" role="group" aria-label="選擇偏好風味">
+            <button class="flavor-choice" type="button" data-flavor="light" aria-pressed="true"><span class="choice-icon" aria-hidden="true">🌸</span><span><strong>明亮花果香與輕盈酸甜</strong><small>清新、細緻，像一束晨光</small></span></button>
+            <button class="flavor-choice" type="button" data-flavor="medium" aria-pressed="false"><span class="choice-icon" aria-hidden="true">🍯</span><span><strong>焦糖甘醇與濃郁堅果甜</strong><small>圓潤、平衡，日常剛剛好</small></span></button>
+            <button class="flavor-choice" type="button" data-flavor="rare" aria-pressed="false"><span class="choice-icon" aria-hidden="true">👑</span><span><strong>稀世珍品與極致藝伎香</strong><small>層次繁複，值得慢慢品味</small></span></button>
+          </div></div>
+          <div class="finder-result" aria-live="polite"><span class="eyebrow">YOUR MATCH</span><h3 id="resultName">耶加雪菲 斑蒂雅</h3><p id="resultDesc">茉莉與白桃香氣輕柔綻放，尾韻帶著清爽的伯爵茶感，是明亮日常的好選擇。</p><div class="result-buy"><span class="price" id="resultPrice">480 <small>NT$ / 250g</small></span><button class="button button-gold" id="resultBuy" type="button">將推薦豆款加入購物袋 <span aria-hidden="true">→</span></button></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vip-section" id="vip">
+      <div class="container"><div class="vip-panel">
+        <div class="vip-copy"><span class="eyebrow">A LITTLE SOMETHING FOR YOU</span><h2>讓下一杯精品手沖，更值得期待</h2><p>任選 2 包頂級莊園豆現折 NT$150，另贈典藏手沖濾紙與門市品鑑券。新鮮烘焙、全台免運，為你的日常添一點講究。</p><div class="vip-perks"><span>✓ 7 日內新鮮烘焙</span><span>✓ 附贈水溫刻度指南卡</span><span>✓ 全台免運直送</span></div></div>
+        <div class="vip-form-wrap"><h3>領取首購專屬禮遇</h3><p>留下 Email，收下你的 NT$150 優惠碼。</p><form class="email-row" id="couponForm"><label class="sr-only" for="couponEmail">電子郵件</label><input id="couponEmail" name="email" type="email" placeholder="name@example.com" autocomplete="email" required><button class="button button-dark" type="submit">立即領取</button></form><small class="vip-note">優惠碼 POUR150 將寄送至你的信箱</small></div>
+      </div></div>
+    </section>
+
+    <section class="reviews-section" id="reviews">
+      <div class="container"><header class="section-heading"><span class="eyebrow">NOTES FROM OUR COMMUNITY</span><h2>一杯咖啡，幾段真心分享</h2><p>來自手沖愛好者的風味筆記。</p></header>
+        <div class="review-grid">
+          <article class="review"><div class="stars" aria-label="5 顆星">★★★★★</div><blockquote>「斑蒂雅的花香乾淨又明亮，水蜜桃般的果汁甜感很迷人。沖到一半，整個廚房都是白花香。」</blockquote><div class="review-person"><span class="avatar" aria-hidden="true">陳</span><span><strong>陳立翔</strong><small>手沖資歷 6 年・台北</small></span></div></article>
+          <article class="review"><div class="stars" aria-label="5 顆星">★★★★★</div><blockquote>「藝伎的層次細緻得像香水，門市黑圍裙大師還帶我比較不同水溫，整場品鑑很有收穫。」</blockquote><div class="review-person"><span class="avatar" aria-hidden="true">林</span><span><strong>林怡君</strong><small>精品咖啡愛好者・台中</small></span></div></article>
+          <article class="review"><div class="stars" aria-label="5 顆星">★★★★★</div><blockquote>「黃金曼特寧有很舒服的雪松和黑巧克力厚度，包裝保鮮也做得細心，放在家裡沖很安心。」</blockquote><div class="review-person"><span class="avatar" aria-hidden="true">張</span><span><strong>張冠霖</strong><small>居家手沖玩家・高雄</small></span></div></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">★</span><span class="brand-copy"><strong>星巴克手沖咖啡</strong><small>POUR-OVER RESERVE</small></span></a><p>以一杯咖啡的時間，細細品味來自世界各地的風土與職人心意。</p></div>
+        <div><h3>手沖咖啡專區</h3><ul><li><a href="#beans">產季豆單</a></li><li><a href="#ritual">金杯參數</a></li><li><a href="#finder">尋豆師推薦</a></li><li><a href="#vip">免運優惠組合</a></li></ul></div>
+        <div><h3>典藏門市體驗</h3><ul><li><button class="footer-link reserve-trigger" type="button">預約品鑑席</button></li><li><a href="#ritual">手沖講堂</a></li><li><a href="#beans">門市豆單</a></li></ul></div>
+        <div><h3>顧客服務與諮詢</h3><ul><li><a href="#ritual">手沖 FAQ</a></li><li><a href="#features">產地履歷</a></li><li><a href="#vip">企業禮盒</a></li><li><a href="tel:0800000482">免付費專線 0800-000-482</a></li></ul><a class="footer-address" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%83%91%E5%85%89%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8" target="_blank" rel="noopener noreferrer">台中市西屯區僑光路 100 號 ↗</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Starbucks Pour-Over Reserve</span><span>設計風格：高階咖啡豆・品牌顏色：黃色・用途：推廣手沖咖啡</span></div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="reserveModal" role="presentation" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-head"><div><span class="eyebrow">A MOMENT WITH OUR MASTER</span><h2 id="modalTitle">預約門市手沖品鑑</h2></div><button class="modal-close" id="modalClose" type="button" aria-label="關閉預約視窗">×</button></header>
+      <form class="reserve-form" id="reserveForm">
+        <div class="field"><label for="resName">預約姓名</label><input id="resName" name="name" type="text" autocomplete="name" placeholder="請輸入姓名" required></div>
+        <div class="field"><label for="resPhone">聯絡手機</label><input id="resPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9]{8,15}" placeholder="09xx-xxx-xxx" required></div>
+        <div class="field"><label for="resStore">預約門市</label><select id="resStore" name="store" required><option value="">請選擇門市</option><option>台北旗艦</option><option>台中朝富</option><option>高雄博愛</option><option>新竹巨城</option></select></div>
+        <div class="field"><label for="resBean">指定品鑑豆款</label><select id="resBean" name="bean" required><option value="">請選擇豆款</option><option>耶加雪菲 斑蒂雅</option><option>巴拿馬 波奎特 藝伎</option><option>肯亞 涅里 AA TOP</option><option>音樂家系列 巴哈</option><option>哥倫比亞 薇拉 藝伎</option><option>黃金曼特寧 三次手選</option></select></div>
+        <div class="field"><label for="resDate">預約日期</label><input id="resDate" name="date" type="date" required></div>
+        <div class="field"><label for="resTime">品鑑時段</label><select id="resTime" name="time" required><option value="">請選擇時段</option><option>11:00</option><option>14:30</option><option>16:30</option><option>19:00</option></select></div>
+        <button class="button button-gold" type="submit">確認預約 <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span></div>
+
+  <script>
+    (() => {
+      const cartCount = document.getElementById('cartCount');
+      const cartButton = document.getElementById('cartButton');
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const modal = document.getElementById('reserveModal');
+      const reserveForm = document.getElementById('reserveForm');
+      const beanSelect = document.getElementById('resBean');
+      const dateInput = document.getElementById('resDate');
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+      const beanCards = [...document.querySelectorAll('.bean-card')];
+      let itemCount = 0;
+      let toastTimer;
+      let previousFocus;
+      let recommendedBean = { name: '耶加雪菲 斑蒂雅', price: 480 };
+
+      function showToast(message) {
+        toastMsg.textContent = message;
+        toast.classList.add('show');
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove('show'), 3500);
+      }
+
+      function addToCart(name, price) {
+        itemCount += 1;
+        cartCount.textContent = String(itemCount);
+        cartButton.setAttribute('aria-label', `購物袋，共 ${itemCount} 件`);
+        showToast(`已將「${name}」(NT$ ${price}) 加入購物袋！`);
+      }
+
+      document.querySelectorAll('.buy-button').forEach((button) => {
+        button.addEventListener('click', () => {
+          const card = button.closest('.bean-card');
+          addToCart(card.dataset.bean, card.dataset.price);
+        });
+      });
+      cartButton.addEventListener('click', () => showToast(itemCount ? `購物袋目前有 ${itemCount} 件商品。` : '購物袋還沒有商品，先挑一款喜歡的風味吧。'));
+
+      document.querySelectorAll('.filter-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const filter = tab.dataset.filter;
+          document.querySelectorAll('.filter-tab').forEach((item) => {
+            const active = item === tab;
+            item.classList.toggle('active', active);
+            item.setAttribute('aria-pressed', String(active));
+          });
+          beanCards.forEach((card) => { card.hidden = filter !== 'all' && card.dataset.category !== filter; });
+        });
+      });
+
+      const flavorData = {
+        light: { name: '耶加雪菲 斑蒂雅', price: 480, desc: '茉莉與白桃香氣輕柔綻放，尾韻帶著清爽的伯爵茶感，是明亮日常的好選擇。' },
+        medium: { name: '音樂家系列 巴哈', price: 560, desc: '熟草莓的果甜交織太妃糖與紅石榴，口感圓潤、甜感飽滿，適合慢慢享用。' },
+        rare: { name: '巴拿馬 波奎特 藝伎', price: 820, desc: '玫瑰、佛手柑與荔枝蜂蜜層層展開，細緻優雅的稀有批次，留給特別的品飲時刻。' }
+      };
+      document.querySelectorAll('.flavor-choice').forEach((choice) => {
+        choice.addEventListener('click', () => {
+          const flavor = flavorData[choice.dataset.flavor];
+          recommendedBean = flavor;
+          document.querySelectorAll('.flavor-choice').forEach((item) => item.setAttribute('aria-pressed', String(item === choice)));
+          document.getElementById('resultName').textContent = flavor.name;
+          document.getElementById('resultDesc').textContent = flavor.desc;
+          document.getElementById('resultPrice').innerHTML = `${flavor.price} <small>NT$ / 250g</small>`;
+        });
+      });
+      document.getElementById('resultBuy').addEventListener('click', () => addToCart(recommendedBean.name, recommendedBean.price));
+
+      function openModal(beanName) {
+        previousFocus = document.activeElement;
+        if (beanName) beanSelect.value = beanName;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        document.getElementById('resName').focus();
+      }
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
+      }
+      document.querySelectorAll('.reserve-trigger').forEach((button) => button.addEventListener('click', () => openModal()));
+      document.getElementById('modalClose').addEventListener('click', closeModal);
+      modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+      reserveForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const values = new FormData(reserveForm);
+        const summary = `${values.get('name')}，${values.get('store')}・${values.get('bean')}・${values.get('date')} ${values.get('time')}`;
+        closeModal();
+        reserveForm.reset();
+        showToast(`預約成功！${summary}，期待與你一同品味。`);
+      });
+
+      document.getElementById('couponForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!event.currentTarget.reportValidity()) return;
+        showToast('優惠折扣碼 POUR150 已寄送至該信箱。');
+        event.currentTarget.reset();
+      });
+
+      menuToggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.setAttribute('aria-label', isOpen ? '關閉導覽選單' : '開啟導覽選單');
+        menuToggle.textContent = isOpen ? '×' : '☰';
+      });
+      navLinks.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', '開啟導覽選單');
+        menuToggle.textContent = '☰';
+      }));
+
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const localDate = new Date(tomorrow.getTime() - tomorrow.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+      dateInput.min = localDate;
+      dateInput.value = localDate;
+    })();
+  </script>
+</body>
+</html>
